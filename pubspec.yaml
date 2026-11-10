@@ -1,0 +1,15 @@
+name: server_sdk
+description: Build HTTP APIs as a tree of routes, with typed params, JSON, errors and OpenAPI docs handled for you.
+version: 0.0.1
+
+environment:
+  sdk: ^3.13.7
+
+dependencies:
+  cmdline: ^2.2.0
+  shelf: ^1.4.3
+  shelf_static: ^1.2.0
+
+dev_dependencies:
+  lints: ^6.1.0
+  dart_code_linter: ^4.4.5
