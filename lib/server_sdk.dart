@@ -35,7 +35,9 @@
 /// * Whatever `run` returns is sent as JSON. Throw an [ApiError] to answer
 ///   with an error status.
 /// * `/health`, `/version`, `/openapi.json` and a Swagger UI page at
-///   `/docs`.
+///   `/docs`, each movable or switchable off.
+/// * Errors, startup and request logs ([Server.logRequests]) printed with
+///   `cmdline`; [Server.onError] and [Server.errorBody] change the answers.
 /// * A [Website] (static files, or a [FlutterProject] built for you) served
 ///   on the same origin as the API.
 ///
@@ -53,5 +55,5 @@ export 'src/input.dart';
 export 'src/params.dart';
 export 'src/route.dart';
 export 'src/router.dart' show CompiledEndpoint;
-export 'src/server.dart';
-export 'src/website.dart';
+export 'server.dart';
+export 'website.dart';

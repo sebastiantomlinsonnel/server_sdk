@@ -62,7 +62,7 @@
 <section class="desc markdown">
   <p>Build HTTP APIs as a tree of routes, with typed params, JSON, errors and
 OpenAPI docs handled for you.</p>
-<p>An API is a <a href="../server_sdk/Server-class.html">Server</a> holding <a href="../server_sdk/Route-class.html">Route</a>s, and each route holds the
+<p>An API is a <a href="../server/Server-class.html">Server</a> holding <a href="../server_sdk/Route-class.html">Route</a>s, and each route holds the
 <a href="../server_sdk/Endpoint-class.html">Endpoint</a>s (HTTP methods) it answers. Routes nest, so <code>/todos/&lt;id&gt;</code> can
 live inside <code>/todos</code> and inherit its params.</p>
 <pre class="language-dart"><code class="language-dart">import 'package:server_sdk/server_sdk.dart';
@@ -94,8 +94,10 @@ checked and converted before <code>run</code> is called. Bad input answers 400.<
 <li>Whatever <code>run</code> returns is sent as JSON. Throw an <a href="../server_sdk/ApiError-class.html">ApiError</a> to answer
 with an error status.</li>
 <li><code>/health</code>, <code>/version</code>, <code>/openapi.json</code> and a Swagger UI page at
-<code>/docs</code>.</li>
-<li>A <a href="../server_sdk/Website-class.html">Website</a> (static files, or a <a href="../server_sdk/FlutterProject-class.html">FlutterProject</a> built for you) served
+<code>/docs</code>, each movable or switchable off.</li>
+<li>Errors, startup and request logs (<a href="../server/Server/logRequests.html">Server.logRequests</a>) printed with
+<code>cmdline</code>; <a href="../server/Server/onError.html">Server.onError</a> and <a href="../server/Server/errorBody.html">Server.errorBody</a> change the answers.</li>
+<li>A <a href="../website/Website-class.html">Website</a> (static files, or a <a href="../server_sdk/FlutterProject-class.html">FlutterProject</a> built for you) served
 on the same origin as the API.</li>
 </ul>
 <p>A few shelf types are re-exported (<a href="https://pub.dev/documentation/shelf/1.4.3/shelf/Request-class.html">Request</a>, <a href="https://pub.dev/documentation/shelf/1.4.3/shelf/Response-class.html">Response</a>, <a href="https://pub.dev/documentation/shelf/1.4.3/shelf/Handler.html">Handler</a>,
@@ -156,7 +158,7 @@ says so.
 </dd>
 
           <dt id="FlutterWebsite">
-  <span class="name "><a href="../server_sdk/FlutterWebsite-class.html">FlutterWebsite</a></span> 
+  <span class="name "><a href="../website/FlutterWebsite-class.html">FlutterWebsite</a></span> 
 
 </dt>
 <dd>
@@ -204,7 +206,7 @@ says so.
 </dd>
 
           <dt id="Server">
-  <span class="name "><a href="../server_sdk/Server-class.html">Server</a></span> 
+  <span class="name "><a href="../server/Server-class.html">Server</a></span> 
 
 </dt>
 <dd>
@@ -212,7 +214,7 @@ says so.
 </dd>
 
           <dt id="StaticWebsite">
-  <span class="name "><a href="../server_sdk/StaticWebsite-class.html">StaticWebsite</a></span> 
+  <span class="name "><a href="../website/StaticWebsite-class.html">StaticWebsite</a></span> 
 
 </dt>
 <dd>
@@ -228,7 +230,7 @@ says so.
 </dd>
 
           <dt id="Website">
-  <span class="name "><a href="../server_sdk/Website-class.html">Website</a></span> 
+  <span class="name "><a href="../website/Website-class.html">Website</a></span> 
 
 </dt>
 <dd>
@@ -387,7 +389,9 @@ an old or missing build.
     <h5><span class="package-name">server_sdk</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
+      <li><a href="../server/">server</a></li>
       <li><a href="../server_sdk/">server_sdk</a></li>
+      <li><a href="../website/">website</a></li>
 </ol>
 
   </div>
@@ -398,7 +402,7 @@ an old or missing build.
 <footer>
   <span class="no-break">
     server_sdk
-      0.0.1
+      1.1.0
   </span>
   
 </footer>

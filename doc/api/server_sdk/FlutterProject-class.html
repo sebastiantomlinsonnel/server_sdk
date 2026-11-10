@@ -56,7 +56,7 @@
 <section class="desc markdown">
   <p>A Flutter app, served from its <code>build/web</code> folder and built when <a href="../server_sdk/FlutterProject/build.html">build</a>
 says so.</p>
-<p>Serving uses the <a href="../server_sdk/FlutterWebsite-class.html">FlutterWebsite</a> defaults: unknown pages get
+<p>Serving uses the <a href="../website/FlutterWebsite-class.html">FlutterWebsite</a> defaults: unknown pages get
 <code>index.html</code>, files are revalidated on each load, and
 <a href="../server_sdk/FlutterProject/crossOriginIsolated.html">crossOriginIsolated</a> adds the headers multi-threaded <code>--wasm</code> builds need.</p>
 <pre class="language-dart"><code class="language-dart">final server = Server(
@@ -82,7 +82,7 @@ await server.serve(); // builds ../app if needed, then serves both
   <dd>
     <ul class="gt-separated dark clazz-relationships">
       <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-        <li><a href="../server_sdk/Website-class.html">Website</a></li>
+        <li><a href="../website/Website-class.html">Website</a></li>
       <li>FlutterProject</li>
     </ul>
   </dd>
@@ -388,7 +388,7 @@ when the build fails, and a <a href="https://api.flutter.dev/flutter/dart-core/S
 <footer>
   <span class="no-break">
     server_sdk
-      0.0.1
+      1.1.0
   </span>
   
 </footer>

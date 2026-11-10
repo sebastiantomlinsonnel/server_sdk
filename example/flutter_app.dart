@@ -11,6 +11,7 @@
 // no CORS to set up.
 import 'dart:io';
 
+import 'package:cmdline/cmdline.dart' show fail;
 import 'package:server_sdk/server_sdk.dart';
 
 Future<void> main() async {
@@ -19,11 +20,11 @@ Future<void> main() async {
   final isProduction = Platform.environment['ENV'] == 'production';
 
   final server = Server(
-    name: 'my app',
+    'my app',
     version: '1.0.0',
     // With a website, API paths need a prefix to tell them apart.
     prefix: '/api',
-    middleware: [logRequests()],
+    middleware: [Server.logRequests()],
     routes: [
       Route(
         '/time',
@@ -48,7 +49,7 @@ Future<void> main() async {
   try {
     await server.serve();
   } on FlutterBuildException catch (error) {
-    stderr.writeln(error);
+    fail(error);
     exitCode = 1;
   }
 }

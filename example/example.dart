@@ -33,7 +33,7 @@ class Todo {
 }
 
 final todos = <int, Todo>{1: Todo(1, 'Try server_sdk')};
-var nextId = 2;
+int nextId = 2;
 
 /// Finds the todo for the `<id>` in the path, or answers 404.
 Todo findTodo(ApiInput input) {
@@ -44,12 +44,12 @@ Todo findTodo(ApiInput input) {
 
 Future<void> main() async {
   final Server api = Server(
-    name: 'todos',
+    'todos',
     version: '1.0.0',
     help: 'A small todo list API.',
     website: FlutterProject(r'X:\Flutter\server_sdk\example\website'),
     prefix: '/api',
-    middleware: [logRequests(), ],
+    middleware: [Server.logRequests()],
     routes: [
       Route(
         '/todos',
@@ -104,7 +104,7 @@ Future<void> main() async {
             '/<id>',
             params: [const PathParam.int('id', help: 'The todo id')],
             endpoints: [
-              Endpoint.get(help: 'Get one todo', run: findTodo),
+              const Endpoint.get(help: 'Get one todo', run: findTodo),
               Endpoint.patch(
                 help: 'Change a todo',
                 body: [

@@ -6,7 +6,7 @@ import 'package:server_sdk/server_sdk.dart';
 
 Future<void> main() async {
   final server = Server(
-    name: 'site',
+    'site',
     prefix: '/api',
     docs: false,
     // No /api/openapi.json or /api/docs.

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cmdline/logging.dart';
 import 'package:shelf/shelf.dart';
 
-import 'website.dart';
+import '../website.dart';
 
 /// When a [FlutterProject] runs `flutter build web` before the server starts.
 enum FlutterBuild {

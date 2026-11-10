@@ -4,6 +4,7 @@
 // Run with `dart run example/auth_and_testing.dart`.
 import 'dart:convert';
 
+import 'package:cmdline/cmdline.dart' show log;
 import 'package:server_sdk/server_sdk.dart';
 
 /// Rejects requests without the right `x-api-key` header, except health
@@ -22,7 +23,7 @@ Middleware requireApiKey(String key) =>
     };
 
 final api = Server(
-  name: 'secret',
+  'secret',
   middleware: [requireApiKey('let-me-in')],
   routes: [
     Route(
@@ -48,12 +49,12 @@ Future<void> main() async {
     return (response.statusCode, await response.readAsString());
   }
 
-  print(await call('/health')); // (200, {"status":"ok"})
-  print(await call('/greet/dart')); // (401, {"error":"unauthorized"})
-  print(
+  log(await call('/health')); // (200, {"status":"ok"})
+  log(await call('/greet/dart')); // (401, {"error":"unauthorized"})
+  log(
     await call('/greet/dart', headers: {'x-api-key': 'let-me-in'}),
   ); // (200, {"hello":"dart"})
-  print(
+  log(
     await call('/nope', headers: {'x-api-key': 'let-me-in'}),
   ); // (404, {"error":"not found"})
 }
