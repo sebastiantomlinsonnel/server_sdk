@@ -3,16 +3,16 @@ import 'dart:io';
 
 import 'package:shelf/shelf.dart';
 
-import 'src/endpoint.dart';
-import 'src/errors.dart';
-import 'src/flutter_project.dart';
-import 'src/input.dart';
-import 'src/openapi.dart';
-import 'src/params.dart';
-import 'src/route.dart';
-import 'src/router.dart';
-import 'src/serve.dart';
-import 'src/website.dart';
+import 'endpoint.dart';
+import 'errors.dart';
+import 'flutter_project.dart';
+import 'input.dart';
+import 'openapi.dart';
+import 'params.dart';
+import 'route.dart';
+import 'router.dart';
+import 'serve.dart';
+import 'website.dart';
 
 /// An HTTP API described as a tree of [Route]s.
 ///

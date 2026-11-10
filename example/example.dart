@@ -1,6 +1,5 @@
 import 'package:server_sdk/server_sdk.dart';
 
-/// Run it, then open http://localhost:8080/docs.
 Future<void> main() async {
   final api = WEB(
     name: 'hello',

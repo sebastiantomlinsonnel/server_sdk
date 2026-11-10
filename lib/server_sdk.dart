@@ -11,10 +11,10 @@ export 'package:shelf/shelf.dart'
 
 export 'src/endpoint.dart';
 export 'src/errors.dart';
+export 'src/flutter_project.dart';
 export 'src/input.dart';
 export 'src/params.dart';
 export 'src/route.dart';
 export 'src/router.dart' show CompiledEndpoint;
-export 'src/flutter_project.dart';
+export 'src/web.dart';
 export 'src/website.dart';
-export 'web.dart';
