@@ -4,17 +4,20 @@ analyzer:
   errors:
     discarded_futures: ignore
     use_named_constants: ignore
+    close_sinks: warning
+
   language:
     strict-casts: false       # no silent casts from dynamic
     strict-inference: true   # no types quietly inferred as dynamic
     strict-raw-types: true   # no raw generics like List instead of List<int>
   exclude:
-    - build/**
     - "**/*.g.dart"
+    - build/**
     - windows/**
-#  errors:
-#    unawaited_futures: warning
-#    discarded_futures: warning
+    - android/**
+    - web/**
+    - ios/**
+    - macos/**
 
 # ---------------------------------------------------------------------------
 # IDE: which dart_code_linter rules show in the editor, and at what severity.
@@ -52,14 +55,6 @@ plugins:
       double-literal-format: true
       format-comment: true
 
-      # Tests
-      missing-test-assertion: true
-
-# ---------------------------------------------------------------------------
-# CLI: the rules `dart run dart_code_linter:metrics analyze lib` runs, plus
-# per-rule settings (the IDE plugin also reads the settings from here).
-# To turn a rule off everywhere, remove it from BOTH lists.
-# ---------------------------------------------------------------------------
 dart_code_linter:
   metrics:
     cyclomatic-complexity: 20
@@ -103,9 +98,6 @@ dart_code_linter:
     - format-comment:
         only-doc-comments: true
 
-# ---------------------------------------------------------------------------
-# Built-in Dart lints (IDE and `dart analyze`), on top of lints/recommended.
-# ---------------------------------------------------------------------------
 linter:
   rules:
     # Performance

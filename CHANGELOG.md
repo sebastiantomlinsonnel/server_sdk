@@ -1,4 +1,8 @@
-# 1.1.0
+### 1.1.0
+
+- Bug fixes
+
+## 1.1.0
 
 - `Server`: `onError` handles uncaught exceptions; `errorBody` shapes every `ApiError` response.
 - `Server`: `healthPath`, `versionPath`, `openApiPath` and `docsPath` move the built-in endpoints, or turn them off with `null`.
@@ -10,6 +14,6 @@
 
 - Initial Release
 
-# 0.0.1
+### 0.0.1
 
 - Initial version

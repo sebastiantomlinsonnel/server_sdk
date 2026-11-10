@@ -48,6 +48,7 @@ library;
 export 'package:shelf/shelf.dart'
     show Handler, Request, Response, Middleware, logRequests;
 
+export 'server.dart';
 export 'src/endpoint.dart';
 export 'src/errors.dart';
 export 'src/flutter_project.dart';
@@ -55,5 +56,4 @@ export 'src/input.dart';
 export 'src/params.dart';
 export 'src/route.dart';
 export 'src/router.dart' show CompiledEndpoint;
-export 'server.dart';
 export 'website.dart';
