@@ -1,6 +1,11 @@
 name: server_sdk
 description: Build HTTP APIs as a tree of routes, with typed params, JSON, errors and OpenAPI docs handled for you.
 version: 0.0.1
+homepage: https://pub.dev/packages/server_sdk
+topics:
+  - server
+  - website
+  - api
 
 environment:
   sdk: ^3.13.7

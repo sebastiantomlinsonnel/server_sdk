@@ -147,7 +147,7 @@ class FlutterProject extends Website {
   Handler get handler => _site.handler;
 
   /// Records the settings of the last build; its time is the build time.
-  String get _stampPath => _join(directory, 'build/.web_builder_build');
+  String get _stampPath => _join(directory, 'build/.server_sdk_build');
 
   bool _changed() {
     final stamp = File(_stampPath);

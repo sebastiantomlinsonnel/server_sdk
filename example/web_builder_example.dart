@@ -1,4 +1,4 @@
-import 'package:web_builder/web_builder.dart';
+import 'package:server_sdk/server_sdk.dart';
 
 /// Run it, then open http://localhost:8080/docs.
 Future<void> main() async {
