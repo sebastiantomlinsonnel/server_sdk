@@ -32,12 +32,12 @@ import 'website.dart';
 ///   site and the API share one origin.
 ///
 /// ```dart
-/// final api = WEB(
+/// final api = Server(
 ///   name: 'todos',
 ///   version: '1.0.0',
 ///   help: 'A small todo list.',
 ///   prefix: '/api',
-///   middleware: [logRequests(), WEB.cors()],
+///   middleware: [logRequests(), Server.cors()],
 ///   routes: [
 ///     Route(
 ///       '/todos',
@@ -51,7 +51,7 @@ import 'website.dart';
 ///
 /// await api.serve(port: 3000);
 /// ```
-class WEB {
+class Server {
   /// The name shown in the docs and when the server starts.
   final String name;
 
@@ -86,7 +86,7 @@ class WEB {
   /// Creates the API. Throws an [ArgumentError] when two endpoints clash, a
   /// [PathParam] isn't in its path, a path uses the same `<name>` twice, or
   /// a [website] is given without a [prefix].
-  WEB({
+  Server({
     required this.name,
     this.version,
     this.help,
@@ -136,7 +136,7 @@ class WEB {
   Handler get handler => _handler ??= _buildHandler();
 
   /// Gets the [website] ready (building it when needed), then starts
-  /// listening and prints where.
+  /// listening and logs the website, API and docs URLs.
   ///
   /// [host] defaults to every IPv4 address (`0.0.0.0`). [port] defaults to
   /// the `PORT` environment variable, then 8080.
@@ -167,9 +167,9 @@ class WEB {
   /// allows any site. [methods] and [headers] list what callers may use.
   ///
   /// ```dart
-  /// WEB(
+  /// Server(
   ///   name: 'api',
-  ///   middleware: [WEB.cors(origin: 'https://example.com')],
+  ///   middleware: [Server.cors(origin: 'https://example.com')],
   ///   routes: [...],
   /// );
   /// ```

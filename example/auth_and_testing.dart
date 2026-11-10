@@ -21,7 +21,7 @@ Middleware requireApiKey(String key) =>
       );
     };
 
-final api = WEB(
+final api = Server(
   name: 'secret',
   middleware: [requireApiKey('let-me-in')],
   routes: [

@@ -55,7 +55,7 @@ class FlutterBuildException implements Exception {
 /// [crossOriginIsolated] adds the headers multi-threaded `--wasm` builds need.
 ///
 /// ```dart
-/// final server = WEB(
+/// final server = Server(
 ///   name: 'my app',
 ///   prefix: '/api', // required when there's a website
 ///   routes: [...],

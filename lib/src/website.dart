@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_static/shelf_static.dart';
 
-/// Something a `WEB` serves next to its API, for every path outside the
+/// Something a `Server` serves next to its API, for every path outside the
 /// API's prefix.
 ///
 /// Use [StaticWebsite], [FlutterWebsite] or `FlutterProject`, or extend this
@@ -32,7 +32,7 @@ abstract class Website {
 /// Only `GET` and `HEAD` are answered; other methods get 405.
 ///
 /// ```dart
-/// WEB(
+/// Server(
 ///   name: 'site',
 ///   prefix: '/api',
 ///   website: StaticWebsite(

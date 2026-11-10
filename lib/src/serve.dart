@@ -4,9 +4,10 @@ import 'package:cmdline/cmdline.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
-/// Starts [handler] and prints the lines from [banner] with the base URL.
+/// Starts [handler] and logs the lines from [banner], given the base URL,
+/// with `cmdline`'s `trace`.
 ///
-/// [port] defaults to the `PORT` environment variable, then 8080.
+/// [host] defaults to every IPv4 address. [port] defaults to the `PORT` environment variable, then 8080.
 Future<HttpServer> startServer(
   Handler handler, {
   required List<String> Function(String base) banner,

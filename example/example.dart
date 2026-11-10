@@ -43,7 +43,7 @@ Todo findTodo(ApiInput input) {
 }
 
 Future<void> main() async {
-  final WEB api = WEB(
+  final Server api = Server(
     name: 'todos',
     version: '1.0.0',
     help: 'A small todo list API.',

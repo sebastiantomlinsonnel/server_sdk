@@ -18,7 +18,7 @@ Future<void> main() async {
   // `build/web` and never build.
   final isProduction = Platform.environment['ENV'] == 'production';
 
-  final server = WEB(
+  final server = Server(
     name: 'my app',
     version: '1.0.0',
     // With a website, API paths need a prefix to tell them apart.

@@ -1,7 +1,7 @@
 /// Build HTTP APIs as a tree of routes, with typed params, JSON, errors and
 /// OpenAPI docs handled for you.
 ///
-/// An API is a [WEB] holding [Route]s, and each route holds the
+/// An API is a [Server] holding [Route]s, and each route holds the
 /// [Endpoint]s (HTTP methods) it answers. Routes nest, so `/todos/<id>` can
 /// live inside `/todos` and inherit its params.
 ///
@@ -9,7 +9,7 @@
 /// import 'package:server_sdk/server_sdk.dart';
 ///
 /// Future<void> main() async {
-///   final api = WEB(
+///   final api = Server(
 ///     name: 'hello',
 ///     version: '1.0.0',
 ///     routes: [
@@ -53,5 +53,5 @@ export 'src/input.dart';
 export 'src/params.dart';
 export 'src/route.dart';
 export 'src/router.dart' show CompiledEndpoint;
-export 'src/web.dart';
+export 'src/server.dart';
 export 'src/website.dart';

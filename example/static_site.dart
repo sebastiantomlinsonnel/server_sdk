@@ -5,7 +5,7 @@
 import 'package:server_sdk/server_sdk.dart';
 
 Future<void> main() async {
-  final server = WEB(
+  final server = Server(
     name: 'site',
     prefix: '/api',
     docs: false,
