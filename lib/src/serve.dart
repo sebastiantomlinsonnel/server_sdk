@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cmdline/cmdline.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -17,7 +18,7 @@ Future<HttpServer> startServer(
     host ?? InternetAddress.anyIPv4,
     port ?? int.tryParse(Platform.environment['PORT'] ?? '') ?? 8080,
   );
-  banner('http://localhost:${server.port}').forEach(stdout.writeln);
+  banner('http://localhost:${server.port}').forEach(trace);
 
   return server;
 }

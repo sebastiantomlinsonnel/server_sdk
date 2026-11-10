@@ -44,6 +44,7 @@ class RouteMatch {
   /// The raw text of each path param.
   final Map<String, String> rawParams;
 
+  /// Creates a match for [target] with the raw path params in [rawParams].
   const RouteMatch(this.target, this.rawParams);
 }
 

@@ -9,7 +9,6 @@ analyzer:
     strict-inference: true   # no types quietly inferred as dynamic
     strict-raw-types: true   # no raw generics like List instead of List<int>
   exclude:
-    - example/**
     - build/**
     - "**/*.g.dart"
     - windows/**
@@ -134,5 +133,5 @@ linter:
     avoid_print: true
     always_declare_return_types: true
     type_annotate_public_apis: true
-    public_member_api_docs: false
+    public_member_api_docs: true
     constant_identifier_names: false

@@ -8,9 +8,30 @@ import 'params.dart';
 /// * `null`, answered with 204 No Content;
 /// * anything else, sent as JSON (objects with `toJson()` work) with the
 ///   endpoint's [Endpoint.status].
+///
+/// Throw an `ApiError` to answer with an error. Any other exception is
+/// logged and answers 500 with `{"error": "internal error"}`.
 typedef RunFunction = FutureOr<Object?> Function(ApiInput input);
 
 /// One HTTP method on a [Route], like `GET /todos`.
+///
+/// Use the named constructors for the common methods. `GET` and `DELETE`
+/// take no [body]; use the unnamed constructor for anything else.
+///
+/// ```dart
+/// Endpoint.post(
+///   help: 'Add a todo',
+///   status: 201,
+///   body: [
+///     const BodyField.string('title', required: true),
+///     const BodyField.bool('done', defaultValue: false),
+///   ],
+///   run: (input) => {
+///     'title': input.body.get<String>('title'),
+///     'done': input.body.get<bool>('done'),
+///   },
+/// );
+/// ```
 class Endpoint {
   /// The HTTP method, in capitals.
   final String method;
@@ -18,7 +39,8 @@ class Endpoint {
   /// A one-line description shown in the docs.
   final String? help;
 
-  /// The status sent when [run] returns a value. Defaults to 200.
+  /// The status sent when [run] returns a value. Defaults to 200; 201 is
+  /// usual for endpoints that create something.
   final int status;
 
   /// The `?name=value` params this endpoint reads.
@@ -34,7 +56,7 @@ class Endpoint {
   /// The function that answers the request.
   final RunFunction run;
 
-  /// Creates an endpoint for any [method].
+  /// Creates an endpoint for any [method], like `'OPTIONS'`.
   const Endpoint(
     this.method, {
     required this.run,

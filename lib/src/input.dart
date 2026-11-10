@@ -3,6 +3,18 @@ import 'package:shelf/shelf.dart';
 import 'errors.dart';
 
 /// Checked values from one part of the request (path, query or body).
+///
+/// Values are already converted to their declared types, so `get<int>` on
+/// a [PathParam.int] or [QueryParam.int] is safe.
+///
+/// ```dart
+/// run: (input) {
+///   final id = input.params.get<int>('id');      // required: throws 400
+///   final limit = input.query.maybe<int>('limit'); // optional: may be null
+///   final title = input.body['title'];           // Object?
+///   ...
+/// }
+/// ```
 class Values {
   final Map<String, Object?> _values;
 

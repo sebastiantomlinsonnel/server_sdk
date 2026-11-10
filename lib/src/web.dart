@@ -27,8 +27,30 @@ import 'website.dart';
 ///   [version] is set. Declare your own to replace them.
 /// * `GET <prefix>/openapi.json` and `GET <prefix>/docs` describe every
 ///   route, unless [docs] is false.
+/// * `HEAD` requests are answered by the matching `GET` endpoint.
 /// * With a [website], every path outside [prefix] is served from it, so the
 ///   site and the API share one origin.
+///
+/// ```dart
+/// final api = WEB(
+///   name: 'todos',
+///   version: '1.0.0',
+///   help: 'A small todo list.',
+///   prefix: '/api',
+///   middleware: [logRequests(), WEB.cors()],
+///   routes: [
+///     Route(
+///       '/todos',
+///       help: 'Todos',
+///       endpoints: [
+///         Endpoint.get(run: (_) => todos),
+///       ],
+///     ),
+///   ],
+/// );
+///
+/// await api.serve(port: 3000);
+/// ```
 class WEB {
   /// The name shown in the docs and when the server starts.
   final String name;
@@ -62,8 +84,8 @@ class WEB {
   Handler? _handler;
 
   /// Creates the API. Throws an [ArgumentError] when two endpoints clash, a
-  /// [PathParam] isn't in its path, or a [website] is given without a
-  /// [prefix].
+  /// [PathParam] isn't in its path, a path uses the same `<name>` twice, or
+  /// a [website] is given without a [prefix].
   WEB({
     required this.name,
     this.version,
@@ -101,12 +123,26 @@ class WEB {
   ///
   /// Use it in tests or to mount the API in another shelf server. Call
   /// `website.prepare()` first if the website may still need building.
+  ///
+  /// Testing without opening a port:
+  ///
+  /// ```dart
+  /// final response = await api.handler(
+  ///   Request('GET', Uri.parse('http://localhost/api/todos')),
+  /// );
+  /// print(response.statusCode); // 200
+  /// print(await response.readAsString());
+  /// ```
   Handler get handler => _handler ??= _buildHandler();
 
   /// Gets the [website] ready (building it when needed), then starts
   /// listening and prints where.
   ///
-  /// [port] defaults to the `PORT` environment variable, then 8080.
+  /// [host] defaults to every IPv4 address (`0.0.0.0`). [port] defaults to
+  /// the `PORT` environment variable, then 8080.
+  ///
+  /// Throws a [FlutterBuildException] when a [FlutterProject] fails to
+  /// build, and a [StateError] when the website's folder doesn't exist.
   Future<HttpServer> serve({Object? host, int? port}) async {
     await website?.prepare();
     final prefix = joinPaths('', this.prefix);
@@ -126,6 +162,17 @@ class WEB {
 
   /// Middleware that lets browsers on other origins call the API, and answers
   /// `OPTIONS` preflight requests.
+  ///
+  /// [origin] is sent as `access-control-allow-origin`; the default `*`
+  /// allows any site. [methods] and [headers] list what callers may use.
+  ///
+  /// ```dart
+  /// WEB(
+  ///   name: 'api',
+  ///   middleware: [WEB.cors(origin: 'https://example.com')],
+  ///   routes: [...],
+  /// );
+  /// ```
   static Middleware cors({
     String origin = '*',
     List<String> methods = const ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],

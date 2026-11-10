@@ -1,9 +1,46 @@
-/// Build HTTP APIs as a tree of routes, the way `cmdline` builds CLIs.
+/// Build HTTP APIs as a tree of routes, with typed params, JSON, errors and
+/// OpenAPI docs handled for you.
 ///
-/// Declare [WEB] → [Route] → [Endpoint], with typed [PathParam]s,
-/// [QueryParam]s and [BodyField]s. Validation, JSON, errors and OpenAPI docs
-/// are handled for you. Give [WEB] a [FlutterProject] to serve (and build)
-/// a Flutter site next to the API.
+/// An API is a [WEB] holding [Route]s, and each route holds the
+/// [Endpoint]s (HTTP methods) it answers. Routes nest, so `/todos/<id>` can
+/// live inside `/todos` and inherit its params.
+///
+/// ```dart
+/// import 'package:server_sdk/server_sdk.dart';
+///
+/// Future<void> main() async {
+///   final api = WEB(
+///     name: 'hello',
+///     version: '1.0.0',
+///     routes: [
+///       Route(
+///         '/hello',
+///         endpoints: [
+///           Endpoint.get(
+///             query: [const QueryParam.string('name', defaultValue: 'world')],
+///             run: (input) => {'message': 'Hello, ${input.query['name']}!'},
+///           ),
+///         ],
+///       ),
+///     ],
+///   );
+///
+///   await api.serve(); // http://localhost:8080/hello?name=Dart
+/// }
+/// ```
+///
+/// What you get without writing it yourself:
+/// * Values declared as [PathParam]s, [QueryParam]s and [BodyField]s are
+///   checked and converted before `run` is called. Bad input answers 400.
+/// * Whatever `run` returns is sent as JSON. Throw an [ApiError] to answer
+///   with an error status.
+/// * `/health`, `/version`, `/openapi.json` and a Swagger UI page at
+///   `/docs`.
+/// * A [Website] (static files, or a [FlutterProject] built for you) served
+///   on the same origin as the API.
+///
+/// A few shelf types are re-exported ([Request], [Response], [Handler],
+/// [Middleware] and [logRequests]), so most apps only need this import.
 library;
 
 export 'package:shelf/shelf.dart'

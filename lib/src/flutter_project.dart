@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cmdline/logging.dart';
 import 'package:shelf/shelf.dart';
 
 import 'website.dart';
@@ -52,6 +53,21 @@ class FlutterBuildException implements Exception {
 /// Serving uses the [FlutterWebsite] defaults: unknown pages get
 /// `index.html`, files are revalidated on each load, and
 /// [crossOriginIsolated] adds the headers multi-threaded `--wasm` builds need.
+///
+/// ```dart
+/// final server = WEB(
+///   name: 'my app',
+///   prefix: '/api', // required when there's a website
+///   routes: [...],
+///   website: FlutterProject(
+///     '../app',
+///     build: FlutterBuild.ifChanged,
+///     dartDefines: {'API_URL': '/api'},
+///   ),
+/// );
+///
+/// await server.serve(); // builds ../app if needed, then serves both
+/// ```
 class FlutterProject extends Website {
   /// The Flutter project folder, the one with `pubspec.yaml`. A relative path
   /// is read from the current working folder.
@@ -115,7 +131,8 @@ class FlutterProject extends Website {
   );
 
   /// Builds the app when [build] says so. Throws a [FlutterBuildException]
-  /// when the build fails.
+  /// when the build fails, and a [StateError] when [directory] has no
+  /// `pubspec.yaml`.
   @override
   Future<void> prepare() async {
     if (!File(_join(directory, 'pubspec.yaml')).existsSync()) {
@@ -123,7 +140,7 @@ class FlutterProject extends Website {
     }
     if (!needsBuild) return;
 
-    stdout.writeln('Building $directory: $flutter ${arguments.join(' ')}');
+    trace('Building $directory: $flutter ${arguments.join(' ')}');
     final exitCode = await _runner(flutter, arguments, directory);
     if (exitCode != 0) throw FlutterBuildException(directory, exitCode);
 

@@ -5,6 +5,16 @@ import 'package:shelf_static/shelf_static.dart';
 
 /// Something a `WEB` serves next to its API, for every path outside the
 /// API's prefix.
+///
+/// Use [StaticWebsite], [FlutterWebsite] or `FlutterProject`, or extend this
+/// to serve something else:
+///
+/// ```dart
+/// class Hello extends Website {
+///   @override
+///   Handler get handler => (request) => Response.ok('Hello!');
+/// }
+/// ```
 abstract class Website {
   /// Creates a website.
   const Website();
@@ -18,6 +28,20 @@ abstract class Website {
 }
 
 /// A folder of static files.
+///
+/// Only `GET` and `HEAD` are answered; other methods get 405.
+///
+/// ```dart
+/// WEB(
+///   name: 'site',
+///   prefix: '/api',
+///   website: StaticWebsite(
+///     'public',
+///     spaFallback: true,
+///     cacheControl: 'max-age=3600',
+///   ),
+/// );
+/// ```
 class StaticWebsite extends Website {
   /// The folder the files are served from.
   final String directory;

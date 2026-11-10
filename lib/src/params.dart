@@ -2,11 +2,23 @@ import 'errors.dart';
 
 /// The JSON type a [Field] holds.
 enum ParamType {
+  /// Text, read as a Dart `String`.
   string('string'),
+
+  /// A whole number, read as a Dart `int`.
   int('integer'),
+
+  /// Any number, read as a Dart `double`. JSON whole numbers are accepted
+  /// too.
   double('number'),
+
+  /// `true` or `false`, read as a Dart `bool`.
   bool('boolean'),
+
+  /// A JSON object, read as a `Map<String, Object?>`. Body fields only.
   map('object'),
+
+  /// A JSON array, read as a `List<Object?>`. Body fields only.
   list('array');
 
   /// The name OpenAPI uses for this type.
@@ -32,9 +44,12 @@ abstract class Field {
   /// The value used when the caller leaves it out.
   final Object? defaultValue;
 
-  /// When given, the value must be one of these.
+  /// When given, the value must be one of these, or the request answers 400.
+  /// Shown as an `enum` in the docs.
   final List<Object>? allowed;
 
+  /// Creates a field. Use the named constructors on [PathParam],
+  /// [QueryParam] and [BodyField] rather than calling this.
   const Field(
     this.name,
     this.type, {
@@ -112,6 +127,24 @@ abstract class Field {
 ///
 /// Path params are always required. A `<name>` in a path with no matching
 /// [PathParam] is treated as a string.
+///
+/// ```dart
+/// Route(
+///   '/users/<user>/posts/<post>',
+///   params: [
+///     const PathParam.string('user', help: 'The user name'),
+///     const PathParam.int('post'),
+///   ],
+///   endpoints: [
+///     Endpoint.get(
+///       run: (input) => {
+///         'user': input.params.get<String>('user'),
+///         'post': input.params.get<int>('post'),
+///       },
+///     ),
+///   ],
+/// );
+/// ```
 class PathParam extends Field {
   /// A param kept as text.
   const PathParam.string(String name, {String? help, List<String>? allowed})
@@ -136,6 +169,24 @@ class PathParam extends Field {
 }
 
 /// A `?name=value` part of the URL.
+///
+/// Query params are optional unless `required` is set. A missing one is
+/// null, or its `defaultValue` when one is given.
+///
+/// ```dart
+/// Endpoint.get(
+///   query: [
+///     const QueryParam.int('limit', defaultValue: 20),
+///     const QueryParam.string('sort', allowed: ['new', 'old']),
+///     const QueryParam.bool('done'),
+///   ],
+///   run: (input) => search(
+///     limit: input.query.get<int>('limit'),
+///     sort: input.query.maybe<String>('sort'),
+///     done: input.query.maybe<bool>('done'),
+///   ),
+/// );
+/// ```
 class QueryParam extends Field {
   /// A param kept as text.
   const QueryParam.string(
@@ -181,7 +232,11 @@ class QueryParam extends Field {
          defaultValue: defaultValue,
        );
 
-  /// A yes/no param. `?name`, `?name=true` and `?name=1` all mean true.
+  /// A yes/no param.
+  ///
+  /// `?name`, `?name=true`, `?name=1` and `?name=yes` mean true;
+  /// `?name=false`, `?name=0` and `?name=no` mean false. Case is ignored,
+  /// and any other value answers 400.
   const QueryParam.bool(
     String name, {
     String? help,
@@ -200,6 +255,21 @@ class QueryParam extends Field {
 }
 
 /// A field of the JSON object sent as the request body.
+///
+/// When an endpoint declares any body fields, the body must be a JSON
+/// object (an empty body counts as `{}`). Fields that aren't declared are
+/// ignored, but stay readable through `ApiInput.json`.
+///
+/// ```dart
+/// Endpoint.post(
+///   body: [
+///     const BodyField.string('title', required: true),
+///     const BodyField.string('priority', allowed: ['low', 'high']),
+///     const BodyField.list('tags'),
+///   ],
+///   run: (input) => create(input.body.toMap()),
+/// );
+/// ```
 class BodyField extends Field {
   /// A JSON string.
   const BodyField.string(

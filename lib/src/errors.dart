@@ -3,6 +3,19 @@
 /// Throw it from a `run` function to stop and answer with [status].
 /// The framework throws it too, for bad params (400), unknown paths (404)
 /// and wrong methods (405).
+///
+/// ```dart
+/// Endpoint.get(
+///   run: (input) {
+///     final todo = todos[input.params.get<int>('id')];
+///     if (todo == null) throw const ApiError.notFound('no such todo');
+///
+///     return todo;
+///   },
+/// );
+/// ```
+///
+/// Answers `404` with `{"error": "no such todo"}`.
 class ApiError implements Exception {
   /// The HTTP status code to answer with.
   final int status;
