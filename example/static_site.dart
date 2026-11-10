@@ -8,7 +8,8 @@ Future<void> main() async {
   final server = WEB(
     name: 'site',
     prefix: '/api',
-    docs: false, // No /api/openapi.json or /api/docs.
+    docs: false,
+    // No /api/openapi.json or /api/docs.
     routes: [
       Route(
         '/contact',

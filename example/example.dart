@@ -47,9 +47,9 @@ Future<void> main() async {
     name: 'todos',
     version: '1.0.0',
     help: 'A small todo list API.',
-    website: FlutterWebsite('example/website'),
+    website: FlutterProject(r'X:\Flutter\server_sdk\example\website'),
     prefix: '/api',
-    middleware: [logRequests()],
+    middleware: [logRequests(), ],
     routes: [
       Route(
         '/todos',
@@ -153,7 +153,5 @@ Future<void> main() async {
     ],
   );
 
-  // Also serves GET /api/health, /api/version, /api/openapi.json and
-  // /api/docs.
   await api.serve();
 }

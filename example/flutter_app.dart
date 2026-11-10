@@ -36,7 +36,7 @@ Future<void> main() async {
       ),
     ],
     website: FlutterProject(
-      '../my_app',
+      r'X:\Flutter\server_sdk\example\website',
       build: isProduction ? FlutterBuild.never : FlutterBuild.ifChanged,
       dartDefines: {'API_BASE': '/api'},
       buildArgs: ['--release'],

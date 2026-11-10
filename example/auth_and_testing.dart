@@ -37,7 +37,10 @@ final api = WEB(
 );
 
 Future<void> main() async {
-  Future<(int, String)> call(String path, {Map<String, String>? headers}) async {
+  Future<(int, String)> call(
+    String path, {
+    Map<String, String>? headers,
+  }) async {
     final response = await api.handler(
       Request('GET', Uri.parse('http://localhost$path'), headers: headers),
     );
